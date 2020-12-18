@@ -43,7 +43,9 @@ function generateEntryPostBody(openWeatherResponseData = {}, feelings = '') {
 }
 
 function updateUi(data = {}) {
-    console.log(data)
+    document.getElementById('date').innerHTML = `<p>${data.date}</p>`
+    document.getElementById('temp').innerHTML = `<h2>${Math.round(data.temp)}\u00B0F</h2>`
+    document.getElementById('content').innerHTML = `<p>${data.feelings}</p>`
 }
 
 function setUpListeners() {

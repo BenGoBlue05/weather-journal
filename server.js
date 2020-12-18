@@ -19,7 +19,7 @@ const server = app.listen(port, () => console.log(`running on localhost: ${port}
 
 app.post('/add', (req, res) => {
     projectData = req.body
-    res.sendStatus(201)
+    res.status(201).send({})
 })
 
 app.get('/all', (_, res) => res.status(200).send(projectData))

@@ -11,29 +11,19 @@ function getOpenWeatherUrl(zip) {
     return `${baseUrl}?units=imperial&zip=${zip}&appid=${apiKey}`
 }
 
-const postData = async (url = '', body = {}) => {
-    const request = await fetch(url, {
+async function postData(url = '', body = {}) {
+    return (await fetch(url, {
         method: 'POST',
         credentials: 'same-origin',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
-    })
-    try {
-        return await request.json()
-    } catch (error) {
-        console.log('Error: ', error)
-    }
+    })).json()
 }
 
-const fetchData = async (url = '') => {
-    const request = await fetch(url)
-    try {
-        return await request.json()
-    } catch (error) {
-        console.log('Error: ', error)
-    }
+async function fetchData(url = '') {
+    return (await fetch(url)).json()
 }
 
 function generateEntry(zip = '', feelings = '') {
@@ -41,6 +31,7 @@ function generateEntry(zip = '', feelings = '') {
         .then(data => postData('/add', generateEntryPostBody(data, feelings)))
         .then(() => fetchData('/all'))
         .then(data => updateUi(data))
+        .catch((e) => console.log('error', e))
 }
 
 function generateEntryPostBody(openWeatherResponseData = {}, feelings = '') {
